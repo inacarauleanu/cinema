@@ -3,7 +3,7 @@ using {cuid} from '@sap/cds/common';
 
 entity Actors:cuid{
     NAME: String(64);
-    MOVIE_ID: String(64);
+    MOVIE_ID: Integer;
 }
 
 entity Rooms {
@@ -11,6 +11,7 @@ entity Rooms {
         NAME     : String(64);
         CAPACITY : Integer;
 }
+
 
 
 type Genre : String enum {
@@ -42,3 +43,9 @@ entity Movie_to_room_mappings {
     key MOVIE      : Association to one Movies;
     key ROOM       : Association to one Rooms;
 }
+
+
+DEFINE VIEW MOVIE_DETAILS AS
+SELECT m.ID, m.NAME, PRICE, GENRE
+FROM Movies AS m 
+INNER JOIN Actors AS a ON m.ID = a.MOVIE_ID;

@@ -7,22 +7,20 @@ modules:
   type: nodejs
   path: gen/srv
   requires:
-  - name: cinema-db
+  - name: cross-container-service-1
   provides:
   - name: srv-api
     properties:
       srv-url: ${default-url}
   parameters:
     buildpack: nodejs_buildpack
+    memory: 256M
   build-parameters:
     builder: npm-ci
 - name: cinema-db-deployer
   type: hdb
   path: gen/db
   requires:
-  - name: cinema-db
-    properties:
-      TARGET_CONTAINER: ~{hdi-container-name}
   - name: cross-container-service-1
     group: SERVICE_REPLACEMENTS
     properties:
@@ -31,13 +29,6 @@ modules:
   parameters:
     buildpack: nodejs_buildpack
 resources:
-- name: cinema-db
-  type: com.sap.xs.hdi-container
-  parameters:
-    service: hana
-    service-plan: hdi-shared
-  properties:
-    hdi-container-name: ${service-name}
 - name: cross-container-service-1
   type: org.cloudfoundry.existing-service
   parameters:

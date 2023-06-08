@@ -5,5 +5,6 @@ service CinemaAdmin{
     entity Movies as projection on db.Movies;
     entity Actors as projection on db.Actors;
     entity MovieToRoomMapping as select from db.Movie_to_room_mappings;
+    entity MOVIE_DETAILS as select from db.MOVIE_DETAILS;
 }
 
